@@ -1,0 +1,23 @@
+services:
+  web:
+    image: nginx
+    volumes:
+      - ./app:/var/www/html
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"
+    environment:
+      - NGINX_HOST=localhost
+      - NGINX_PORT=80
+    networks:
+      - backend
+  php-fpm:
+    image: php:8.3-fpm
+    volumes:
+      - ./app:/var/www/html
+    networks:
+     - backend
+
+networks:
+  backend:
+    driver: bridge
